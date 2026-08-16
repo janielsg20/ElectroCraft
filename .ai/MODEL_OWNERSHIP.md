@@ -1,68 +1,39 @@
 # MODEL OWNERSHIP — ElectroCraft
 
-Purpose:
-prevent duplicate sources of truth.
+Este documento establece la jerarquía de propiedad de los datos para garantizar la portabilidad del proyecto y la eficiencia del Studio.
 
-# Persisted Project Objects
-- ElectroCraftProjectDefinition
-- ElectroCraftDocument
-- ElectroCraftNavigationDefinition
-- ElectroCraftRouteDefinition
-- ElectroCraftDataSourceDefinition
-- ElectroCraftDataSchema
-- ElectroCraftQueryDefinition
-- ElectroCraftActionGraph
-- ElectroCraftStateDefinition
-- Roles/Policies
-- Theme/DesignSystem
-- project reusable definitions
-- installed extension metadata
+## 1. Project Objects (Persistidos en el Proyecto)
+Son entidades que pertenecen exclusivamente a un proyecto y se versionan con él. Se incluyen en el `ElectroCraftExportIR`.
 
-# Content entities — not project definitions
-- internal records
-- taxonomy terms
-- relation edges
-- users/auth data
-- audit events
-- form drafts
+- **ProjectDefinition**: Metadatos base y configuración.
+- **Documents**: Pantallas, plantillas y componentes reutilizables.
+- **Queries**: Definiciones de consulta (sin resultados).
+- **Actions**: Workflows visuales (grafos).
+- **StateDefinitions**: Definición de variables de estado.
+- **Theme**: Tokens visuales y variantes del proyecto.
+- **Navigation**: Estructura de rutas.
+- **PermissionPolicy**: Roles y reglas de acceso del proyecto.
 
-# Studio-only
-- workspace preferences
-- Studio Appearance
-- Puck/Rete session histories
-- AI generation sessions/drafts/history
-- debug traces
-- caches
+## 2. App Registries (Globales del Studio)
+Son catálogos que residen en la aplicación (Studio). **NUNCA** se serializan dentro de un proyecto. El proyecto solo guarda una referencia por ID.
 
-# App registries — not copied wholesale into project
-- ComponentRegistry
-- FieldRegistry
-- ActionNodeRegistry
-- ConnectorRegistry
-- CapabilityRegistry
-- AppTemplateCatalog
+- **ComponentRegistry**: Tipos de componentes disponibles (Button, Input, etc).
+- **ConnectorRegistry**: Adaptadores de datos (PostgreSQL, REST, etc).
+- **ActionNodeRegistry**: Tipos de nodos lógicos para workflows.
+- **BlueprintCatalog**: Listado de paquetes de inicio disponibles.
+- **PlatformCapabilities**: Matriz de soporte por destino de exportación.
 
-# Engine state that must never become canonical
-- Puck AppState/history/classes
-- Rete node/socket classes/history
-- TanStack Query cache
-- TanStack Table row model
-- Refine hook state
-- Zustand store instance
-- React Router route objects
-- Expo Router objects
-- AI SDK messages/tool/provider objects
+## 3. Content Entities (Datos Dinámicos)
+Viven en el storage (Base de Datos) y el proyecto solo contiene referencias o consultas para acceder a ellos.
 
-# One-tree rule
-ElectroCraftDocument handles:
-screen/template/form/admin-screen/reusable-component.
+- **Records**: Los datos reales creados por el usuario final (Filas de DB).
+- **MediaAssets**: Los archivos binarios (Imágenes, PDFs). El proyecto guarda el `mediaId`.
+- **UserProfiles**: Datos de identidad de los usuarios finales.
+- **AuditLogs**: Historial de cambios y eventos de ejecución.
 
-# Data rule
-DataSourceDefinition identifies source/adapter.
-Internal DataSchema describes ElectroCraft Data.
-External source schemas are connector metadata/snapshots, not converted blindly into internal Data Models.
+---
 
-# AI rule
-AIArtifactDraft is a Studio proposal.
-After Apply, normal canonical objects are created/updated.
-There is no AI-specific Screen/Query/Form model.
+## Reglas de Validación de Arquitectura
+1. Un `ProjectDefinition` serializado no debe superar un tamaño razonable (referencias, no datos masivos).
+2. Si un objeto tiene una propiedad `isRegistryEntity: true`, el serializador debe omitirlo.
+3. Las migraciones solo afectan a los **Project Objects**.

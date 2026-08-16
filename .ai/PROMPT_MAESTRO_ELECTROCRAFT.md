@@ -32,17 +32,10 @@ No se acepta:
 - feature que solo existe en mock data permanente;
 - target export omitido silenciosamente.
 
-## Flujo de Trabajo Autónomo — CI/CD & Cloudflare
-1. **Implementación Sin Test Local**: La IA implementa el código y los tests (`vitest`) sin ejecutarlos localmente para maximizar la velocidad.
-2. **Commit & Push**: La IA sube los cambios al repositorio (simulado o real según el entorno).
-3. **GitHub Actions (Cloud Verification)**: GitHub Actions ejecuta el pipeline completo (`npm run check` -> `build`).
-4. **Despliegue a Cloudflare Pages**: Si los tests pasan, el CI despliega automáticamente a Cloudflare Pages.
-5. **Bucle de Corrección**:
-   - Si el CI falla, la IA descarga/lee los logs del error.
-   - Corrige el código en el entorno local.
-   - Sube los cambios nuevamente.
-   - Repite hasta que el pipeline sea exitoso para la microfase activa.
-6. **PROHIBIDO TERMINAR SIN ÉXITO EN CI**: Ninguna fase se considera DONE si el despliegue/test en la nube no ha sido confirmado.
+## Verificación y Calidad — Local Hybrid
+1. **Verificación Local Obligatoria**: Debido a bloqueos externos en el CI, la IA DEBE ejecutar `vitest`, `npx tsc` y validaciones de código en el entorno local antes de dar una tarea por completada.
+2. **Git como Backup**: Se mantiene el flujo de `commit` y `push` automático a GitHub para persistencia, pero el éxito de la fase no depende de las GitHub Actions.
+3. **Evidencia Local**: Los logs de test locales y resultados de build locales son la fuente de verdad actual.
 
 ---
 
