@@ -5,4 +5,8 @@ export * from './components/ui/tooltip';
 export * from './components/ui/tabs';
 export * from './components/ui/sheet';
 export * from './components/ui/dropdown-menu';
+export * from './components/ui/accordion';
+export * from './components/ui/input';
+export * from './components/ui/slider';
+export * from './components/ui/switch';
 export * from './lib/utils';

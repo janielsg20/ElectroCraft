@@ -30,7 +30,8 @@ import {
   LogOut,
   Download,
   Cloud,
-  ChevronUp
+  ChevronUp,
+  MousePointer2
 } from 'lucide-react';
 import {
   Button,
@@ -41,7 +42,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
   Tabs,
-  TabsContent,
   TabsList,
   TabsTrigger,
   Sheet,
@@ -55,6 +55,7 @@ import {
   cn
 } from '@electrocraft/design-system';
 import { SettingsPanel } from './SettingsPanel';
+import { PropertyInspector } from './PropertyInspector';
 
 interface SidebarItemProps {
   icon: any;
@@ -108,6 +109,7 @@ export const AppShell = () => {
   const [activeSection, setActiveSection] = useState('screens');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [activePlatform, setActivePlatform] = useState('ios');
+  const [selectedElementId, setSelectedElementId] = useState<string | null>(null);
 
   return (
     <TooltipProvider>
@@ -187,7 +189,6 @@ export const AppShell = () => {
                   size={sidebarCollapsed ? "icon" : "default"}
                   className={cn(
                     "w-full rounded-none justify-start px-3 h-10 hover:bg-accent",
-                    activeSection === 'settings' && "bg-accent text-primary",
                     sidebarCollapsed && "justify-center px-0"
                   )}
                 >
@@ -342,7 +343,7 @@ export const AppShell = () => {
                         variant="ghost"
                         className={cn(
                           "w-full rounded-md justify-start font-normal h-9 text-sm px-3 group transition-all",
-                          idx === 0 && "bg-primary/5 text-primary font-bold border-l-4 border-primary rounded-l-none"
+                          idx === 0 && activeSection === 'screens' ? "bg-primary/5 text-primary font-bold border-l-4 border-primary rounded-l-none" : ""
                         )}
                       >
                         <Layers className="w-4 h-4 mr-2.5 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -378,7 +379,7 @@ export const AppShell = () => {
                     </Tabs>
                  </div>
 
-                 <ScrollArea className="flex-1">
+                 <ScrollArea className="flex-1" onClick={() => setSelectedElementId(null)}>
                    <div className="p-12 flex items-center justify-center min-h-full">
                       {/* Device Preview Frame */}
                       <div
@@ -388,6 +389,7 @@ export const AppShell = () => {
                           activePlatform === 'android' ? "w-[400px] h-[800px] rounded-[48px]" :
                           "w-[380px] h-[780px]"
                         )}
+                        onClick={(e) => e.stopPropagation()}
                       >
                           {/* Notch Area (Mobile only) */}
                           {activePlatform !== 'web' && (
@@ -400,13 +402,19 @@ export const AppShell = () => {
                           <div className={cn("bg-background flex-1 flex flex-col", activePlatform !== 'web' && "pt-10")}>
                             <header className="px-6 py-5 flex justify-between items-center border-b bg-background/80 backdrop-blur-sm sticky top-0 z-10">
                               <h2 className="font-black text-xl tracking-tight">Dashboard</h2>
-                              <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center">
+                              <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center cursor-pointer hover:bg-accent transition-colors" onClick={() => setSelectedElementId('profile_icon')}>
                                 <Users className="w-4 h-4 text-muted-foreground" />
                               </div>
                             </header>
 
                             <div className="p-6 space-y-6">
-                              <div className="h-36 w-full bg-gradient-to-br from-primary to-blue-600 rounded-3xl p-5 text-white flex flex-col shadow-xl shadow-primary/20 relative overflow-hidden group">
+                              <div
+                                className={cn(
+                                  "h-36 w-full bg-gradient-to-br from-primary to-blue-600 rounded-3xl p-5 text-white flex flex-col shadow-xl shadow-primary/20 relative overflow-hidden group cursor-pointer transition-all",
+                                  selectedElementId === 'hero_card' && "ring-4 ring-primary ring-offset-2 ring-offset-background"
+                                )}
+                                onClick={() => setSelectedElementId('hero_card')}
+                              >
                                 <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
                                 <span className="text-[10px] font-black uppercase tracking-widest opacity-80">Ventas Totales (Mes)</span>
                                 <span className="text-4xl font-black mt-2 leading-none">$12,450.00</span>
@@ -419,14 +427,14 @@ export const AppShell = () => {
                               </div>
 
                               <div className="grid grid-cols-2 gap-4">
-                                <div className="h-32 bg-card rounded-3xl border border-border/60 p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+                                <div className="h-32 bg-card rounded-3xl border border-border/60 p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer" onClick={() => setSelectedElementId('stats_invoices')}>
                                   <div className="w-9 h-9 rounded-xl bg-orange-500/10 text-orange-600 flex items-center justify-center mb-3">
                                     <Table className="w-5 h-5" />
                                   </div>
                                   <span className="text-[10px] font-black text-muted-foreground/70 uppercase tracking-widest leading-none">Facturas</span>
                                   <div className="text-2xl font-black mt-1">14</div>
                                 </div>
-                                <div className="h-32 bg-card rounded-3xl border border-border/60 p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+                                <div className="h-32 bg-card rounded-3xl border border-border/60 p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer" onClick={() => setSelectedElementId('stats_activity')}>
                                   <div className="w-9 h-9 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center mb-3">
                                     <Zap className="w-5 h-5" />
                                   </div>
@@ -436,7 +444,7 @@ export const AppShell = () => {
                               </div>
 
                               <div className="space-y-3">
-                                <div className="h-16 w-full bg-muted/20 rounded-2xl flex items-center px-4 gap-4 border border-dashed border-border group hover:bg-muted/30 transition-colors cursor-pointer">
+                                <div className="h-16 w-full bg-muted/20 rounded-2xl flex items-center px-4 gap-4 border border-dashed border-border group hover:bg-muted/30 transition-colors cursor-pointer" onClick={() => setSelectedElementId('list_item_1')}>
                                   <div className="w-8 h-8 rounded-full bg-muted animate-pulse" />
                                   <div className="flex-1 space-y-1.5">
                                     <div className="h-2.5 w-24 bg-muted rounded animate-pulse" />
@@ -444,16 +452,15 @@ export const AppShell = () => {
                                   </div>
                                   <ChevronRight className="w-4 h-4 text-muted-foreground/30" />
                                 </div>
-                                <div className="h-16 w-full bg-muted/10 rounded-2xl flex items-center px-4 gap-4 border border-dashed border-border opacity-50">
-                                  <div className="w-8 h-8 rounded-full bg-muted" />
-                                  <div className="flex-1 space-y-1.5">
-                                    <div className="h-2.5 w-32 bg-muted rounded" />
-                                    <div className="h-2 w-20 bg-muted/50 rounded" />
-                                  </div>
-                                </div>
                               </div>
 
-                              <Button className="w-full h-14 rounded-2xl text-base font-black shadow-xl shadow-primary/30 mt-4 active:scale-[0.98] transition-transform">
+                              <Button
+                                className={cn(
+                                  "w-full h-14 rounded-2xl text-base font-black shadow-xl shadow-primary/30 mt-4 active:scale-[0.98] transition-all",
+                                  selectedElementId === 'order_button' && "ring-4 ring-primary ring-offset-2 ring-offset-background"
+                                )}
+                                onClick={() => setSelectedElementId('order_button')}
+                              >
                                 Crear Nueva Orden
                               </Button>
                             </div>
@@ -473,140 +480,7 @@ export const AppShell = () => {
 
               {/* 5. Property Inspector */}
               <aside className="w-80 border-l flex flex-col bg-background shrink-0 hidden xl:flex">
-                <Tabs defaultValue="props" className="flex flex-col h-full">
-                  <div className="px-4 pt-2 border-b bg-muted/5">
-                    <TabsList className="w-full bg-transparent justify-start gap-6 p-0 h-10 border-b-0">
-                      <TabsTrigger value="props" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary bg-transparent shadow-none px-0 text-[10px] font-black uppercase tracking-widest">Propiedades</TabsTrigger>
-                      <TabsTrigger value="style" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary bg-transparent shadow-none px-0 text-[10px] font-black uppercase tracking-widest">Estilo</TabsTrigger>
-                      <TabsTrigger value="events" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary bg-transparent shadow-none px-0 text-[10px] font-black uppercase tracking-widest">Eventos</TabsTrigger>
-                    </TabsList>
-                  </div>
-
-                  <ScrollArea className="flex-1">
-                    <TabsContent value="props" className="p-6 m-0 space-y-6">
-                      <div className="space-y-2">
-                        <label className="text-[10px] uppercase font-black text-muted-foreground/60 tracking-widest">Identificador Canónico</label>
-                        <div className="flex items-center gap-2 p-2.5 bg-primary/5 rounded-xl border border-primary/10 text-[11px] font-mono text-primary font-bold shadow-inner">
-                          <Box className="w-3.5 h-3.5" /> main_action_button
-                        </div>
-                      </div>
-
-                      <Separator className="opacity-50" />
-
-                      <div className="space-y-2">
-                        <label className="text-[10px] uppercase font-black text-muted-foreground/60 tracking-widest">Etiqueta (Texto)</label>
-                        <input className="w-full p-3 bg-muted/20 border rounded-xl text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium" defaultValue="Crear Nueva Orden" />
-                      </div>
-
-                      <div className="space-y-2">
-                        <label className="text-[10px] uppercase font-black text-muted-foreground/60 tracking-widest">Icono Lucide</label>
-                        <Button variant="outline" className="w-full justify-between h-11 px-4 bg-muted/5 rounded-xl border-border/60 hover:bg-muted/10 transition-colors">
-                          <div className="flex items-center gap-2">
-                            <Plus className="w-4 h-4 text-primary" />
-                            <span className="text-xs font-bold">Plus</span>
-                          </div>
-                          <ChevronDown className="w-3.5 h-3.5 text-muted-foreground/50" />
-                        </Button>
-                      </div>
-
-                      <div className="pt-2">
-                        <div className="p-4 rounded-2xl bg-orange-500/5 border border-orange-500/20 space-y-2.5">
-                          <div className="flex items-center gap-2 text-orange-600">
-                            <Zap className="w-4 h-4 fill-orange-600" />
-                            <span className="text-[10px] font-black uppercase tracking-wider">Binding Inteligente</span>
-                          </div>
-                          <p className="text-[11px] text-muted-foreground/80 leading-relaxed font-medium">
-                            Este botón ejecuta una <span className="text-foreground font-bold">Acción de Mutación</span> conectada al esquema de Datos.
-                          </p>
-                        </div>
-                      </div>
-                    </TabsContent>
-
-                    <TabsContent value="style" className="p-6 m-0 space-y-8">
-                       <div className="space-y-4">
-                          <div className="flex justify-between items-center">
-                             <span className="text-[10px] font-black uppercase text-muted-foreground/60 tracking-widest">Paleta de Colores</span>
-                             <Button variant="ghost" size="icon" className="h-7 w-7 rounded-lg hover:bg-primary/10"><Plus className="w-3.5 h-3.5"/></Button>
-                          </div>
-                          <div className="grid grid-cols-2 gap-3">
-                             <div className="p-3 border rounded-2xl flex flex-col gap-2 bg-muted/5 group cursor-pointer hover:border-primary/50 transition-colors">
-                                <div className="w-full h-8 rounded-lg bg-primary shadow-lg shadow-primary/20" />
-                                <span className="text-[10px] font-bold text-center">Fondo</span>
-                             </div>
-                             <div className="p-3 border rounded-2xl flex flex-col gap-2 bg-muted/5 group cursor-pointer hover:border-primary/50 transition-colors">
-                                <div className="w-full h-8 rounded-lg bg-slate-950 border border-white/10" />
-                                <span className="text-[10px] font-bold text-center">Texto</span>
-                             </div>
-                          </div>
-                       </div>
-
-                       <div className="space-y-5">
-                          <span className="text-[10px] font-black uppercase text-muted-foreground/60 tracking-widest">Layout & Box Model</span>
-                          <div className="space-y-4">
-                             <div className="space-y-2">
-                                <div className="flex justify-between items-center text-[10px] font-bold">
-                                   <span className="text-muted-foreground">Radio de borde (px)</span>
-                                   <span className="bg-primary/10 text-primary px-2 py-0.5 rounded-full">16px</span>
-                                </div>
-                                <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
-                                   <div className="h-full w-2/3 bg-primary rounded-full" />
-                                </div>
-                             </div>
-                             <div className="space-y-2">
-                                <div className="flex justify-between items-center text-[10px] font-bold">
-                                   <span className="text-muted-foreground">Elevación (Sombra)</span>
-                                   <span className="bg-primary/10 text-primary px-2 py-0.5 rounded-full">Elevado LG</span>
-                                </div>
-                                <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
-                                   <div className="h-full w-3/4 bg-primary rounded-full" />
-                                </div>
-                             </div>
-                          </div>
-                       </div>
-                    </TabsContent>
-
-                    <TabsContent value="events" className="p-6 m-0">
-                       <div className="space-y-6">
-                          <div className="p-6 rounded-3xl border-2 border-dashed border-primary/20 bg-primary/5 flex flex-col items-center text-center gap-3 transition-all hover:bg-primary/10 group cursor-pointer">
-                             <div className="w-12 h-12 rounded-full bg-background flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                                <Zap className="w-6 h-6 text-primary" />
-                             </div>
-                             <div className="space-y-1">
-                               <p className="text-xs font-black uppercase tracking-tight text-primary">Añadir Workflow</p>
-                               <p className="text-[11px] text-muted-foreground/80 font-medium px-4">Configura lo que ocurre al interactuar con este elemento.</p>
-                             </div>
-                          </div>
-                       </div>
-                    </TabsContent>
-                  </ScrollArea>
-
-                  {/* Layer List Footer */}
-                  <div className="p-4 border-t bg-muted/10 space-y-4 shrink-0">
-                     <div className="flex items-center justify-between px-1">
-                        <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">Explorador de Capas</span>
-                        <div className="flex gap-1.5">
-                          <Button variant="ghost" size="icon" className="h-6 w-6 rounded-md hover:bg-background shadow-sm border border-transparent hover:border-border"><Plus className="w-3.5 h-3.5"/></Button>
-                          <Button variant="ghost" size="icon" className="h-6 w-6 rounded-md hover:bg-background shadow-sm border border-transparent hover:border-border"><Layers className="w-3.5 h-3.5"/></Button>
-                        </div>
-                     </div>
-                     <div className="space-y-1.5 max-h-40 overflow-auto pr-1">
-                        <div className="flex items-center gap-2.5 p-2 text-[11px] hover:bg-background hover:shadow-sm rounded-lg cursor-pointer transition-all border border-transparent hover:border-border group">
-                           <Layout className="w-4 h-4 text-muted-foreground group-hover:text-primary" />
-                           <span className="font-bold">Page_Root</span>
-                           <Eye className="w-3 h-3 ml-auto text-muted-foreground/30" />
-                        </div>
-                        <div className="flex items-center gap-2.5 p-2 text-[11px] hover:bg-background hover:shadow-sm rounded-lg cursor-pointer transition-all border border-transparent hover:border-border group ml-4">
-                           <Box className="w-4 h-4 text-muted-foreground group-hover:text-primary" />
-                           <span className="font-medium">Header_Section</span>
-                           <Eye className="w-3 h-3 ml-auto text-muted-foreground/30" />
-                        </div>
-                        <div className="flex items-center gap-2.5 p-2 text-[11px] bg-primary/10 text-primary rounded-lg cursor-pointer font-black border border-primary/20 shadow-sm ml-8">
-                           <Zap className="w-4 h-4" /> Order_Button
-                           <Eye className="w-3 h-3 ml-auto text-primary/50" />
-                        </div>
-                     </div>
-                  </div>
-                </Tabs>
+                <PropertyInspector selectedElement={selectedElementId} />
               </aside>
 
             </div>
