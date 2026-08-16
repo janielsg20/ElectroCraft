@@ -19,33 +19,13 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: |
-          if [ -f "pnpm-lock.yaml" ]; then
-            npm install -g pnpm
-            pnpm install
-          elif [ -f "yarn.lock" ]; then
-            yarn install
-          elif [ -f "package-lock.json" ]; then
-            npm ci
-          else
-            npm install
-          fi
-        # Note: If no package.json exists yet, this step will be skipped or adjusted in future phases
+        run: npm install
 
-      - name: Lint and Test
-        run: |
-          if [ -f "package.json" ]; then
-            # npm run lint --if-present
-            # npm test --if-present
-            echo "Lint and Test placeholder"
-          fi
+      - name: Quality Check (Lint, Typecheck, Test)
+        run: npm run check
 
       - name: Build
-        run: |
-          if [ -f "package.json" ]; then
-            # npm run build --if-present
-            echo "Build placeholder"
-          fi
+        run: npm run build
 
   deploy:
     needs: build-and-test
