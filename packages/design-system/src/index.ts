@@ -3,4 +3,6 @@ export * from './components/ui/separator';
 export * from './components/ui/scroll-area';
 export * from './components/ui/tooltip';
 export * from './components/ui/tabs';
+export * from './components/ui/sheet';
+export * from './components/ui/dropdown-menu';
 export * from './lib/utils';
