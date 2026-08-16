@@ -25,24 +25,16 @@ class HelpRegistry {
 
 export const helpRegistry = new HelpRegistry();
 
-// F03 Initial registrations
-helpRegistry.register({
-  id: 'screens',
-  titleKey: 'help:sections.screens.title',
-  shortKey: 'help:sections.screens.short',
-  longKey: 'help:sections.screens.long'
-});
+// Final F03 registrations
+const helpItems: HelpDescriptor[] = [
+  { id: 'screens', titleKey: 'help:sections.screens.title', shortKey: 'help:sections.screens.short', longKey: 'help:sections.screens.long' },
+  { id: 'components', titleKey: 'help:sections.components.title', shortKey: 'help:sections.components.short', longKey: 'help:sections.components.long' },
+  { id: 'data_sources', titleKey: 'help:sections.data_sources.title', shortKey: 'help:sections.data_sources.short', longKey: 'help:sections.data_sources.long' },
+  { id: 'records', titleKey: 'help:sections.records.title', shortKey: 'help:sections.records.short', longKey: 'help:sections.records.long' },
+  { id: 'actions', titleKey: 'help:sections.actions.title', shortKey: 'help:sections.actions.short', longKey: 'help:sections.actions.long' },
+  { id: 'ai_generate', titleKey: 'help:sections.ai_generate.title', shortKey: 'help:sections.ai_generate.short', longKey: 'help:sections.ai_generate.long' },
+  { id: 'themes', titleKey: 'help:sections.themes.title', shortKey: 'help:sections.themes.short', longKey: 'help:sections.themes.long' },
+  { id: 'deploy', titleKey: 'help:sections.deploy.title', shortKey: 'help:sections.deploy.short', longKey: 'help:sections.deploy.long' }
+];
 
-helpRegistry.register({
-  id: 'data_sources',
-  titleKey: 'help:sections.data_sources.title',
-  shortKey: 'help:sections.data_sources.short',
-  longKey: 'help:sections.data_sources.long'
-});
-
-helpRegistry.register({
-  id: 'ai_generate',
-  titleKey: 'help:sections.ai_generate.title',
-  shortKey: 'help:sections.ai_generate.short',
-  longKey: 'help:sections.ai_generate.long'
-});
+helpItems.forEach(item => helpRegistry.register(item));

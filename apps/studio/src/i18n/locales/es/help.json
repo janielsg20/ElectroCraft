@@ -10,15 +10,40 @@
       "short": "Gestiona las páginas de tu aplicación.",
       "long": "Las pantallas son los contenedores principales de tu interfaz. Aquí puedes crear nuevas páginas, configurar sus rutas y definir la estructura visual base."
     },
+    "components": {
+      "title": "Componentes",
+      "short": "Catálogo de bloques visuales y funcionales.",
+      "long": "Arrastra botones, formularios y layouts para construir tu interfaz. Los componentes pueden ser nativos (Core), preconfigurados (Presets) o bloques complejos."
+    },
     "data_sources": {
       "title": "Fuentes de Datos",
       "short": "Conecta tu app con el mundo exterior.",
       "long": "Configura conexiones a bases de datos PostgreSQL, MySQL o APIs REST. ElectroCraft mantiene tus credenciales seguras fuera del código fuente."
     },
+    "records": {
+      "title": "Registros",
+      "short": "Administra el contenido de tu base de datos.",
+      "long": "Visualiza y edita las filas de datos almacenadas en tus fuentes locales o remotas mediante una interfaz de tabla profesional."
+    },
+    "actions": {
+      "title": "Acciones y Workflows",
+      "short": "Define la lógica de negocio visualmente.",
+      "long": "Crea flujos de trabajo que se disparan ante eventos (clics, carga de página) para automatizar tareas sin escribir código."
+    },
     "ai_generate": {
       "title": "Generar con IA",
       "short": "Asistente inteligente para diseño y lógica.",
       "long": "Usa la potencia de Gemini para generar componentes, esquemas de datos o flujos de trabajo completos a partir de instrucciones en lenguaje natural."
+    },
+    "themes": {
+      "title": "Temas",
+      "short": "Personaliza la marca de tu aplicación.",
+      "long": "Define los colores globales, tipografía, radios y sombras que darán una identidad visual única a tu producto final."
+    },
+    "deploy": {
+      "title": "Desplegar",
+      "short": "Publica tu App al mundo.",
+      "long": "Sincroniza tus cambios con GitHub y despliega automáticamente a Cloudflare Pages o genera builds para iOS y Android."
     }
   }
 }
