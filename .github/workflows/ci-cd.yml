@@ -1,0 +1,63 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          if [ -f "pnpm-lock.yaml" ]; then
+            npm install -g pnpm
+            pnpm install
+          elif [ -f "yarn.lock" ]; then
+            yarn install
+          elif [ -f "package-lock.json" ]; then
+            npm ci
+          else
+            npm install
+          fi
+        # Note: If no package.json exists yet, this step will be skipped or adjusted in future phases
+
+      - name: Lint and Test
+        run: |
+          if [ -f "package.json" ]; then
+            # npm run lint --if-present
+            # npm test --if-present
+            echo "Lint and Test placeholder"
+          fi
+
+      - name: Build
+        run: |
+          if [ -f "package.json" ]; then
+            # npm run build --if-present
+            echo "Build placeholder"
+          fi
+
+  deploy:
+    needs: build-and-test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=electrocraft
