@@ -7,14 +7,14 @@ Spec:
 Eighth Final Master Spec.
 
 Implementation:
-IN_PROGRESS (F02)
+IN_PROGRESS (F04)
 
 Active:
-F02 — Modelo canónico de App y ownership.
-M02.6 — Serializer y migrations de proyecto.
+F04 — Persistencia local, proyectos y revisiones.
+M04.1 — Crear schema físico estable por objetos y contenido.
 
 Next exact action:
-Implement Project Serializer and MigrationRegistry in `packages/application`.
+Define Drizzle SQL schema in `packages/data-core`.
 
 Critical Eighth changes:
 - all nine export destinations are Core;

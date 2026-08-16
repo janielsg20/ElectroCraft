@@ -4,7 +4,7 @@ Product:
 ElectroCraft — No-Code App Builder.
 
 Execution:
-F02 / M02.6 in progress. M02.5 completed.
+F04 / M04.1 in progress. F03 completed.
 
 Verificación:
 GitHub Actions (Cloud-First Absolute).
