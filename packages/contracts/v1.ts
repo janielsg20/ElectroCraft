@@ -355,3 +355,33 @@ export const CapabilityRegistrySchema = z.object({
 });
 
 export type CapabilityRegistry = z.infer<typeof CapabilityRegistrySchema>;
+
+// --- M02.7: ElectroCraftExportIR ---
+
+export const ElectroCraftExportIRSchema = z.object({
+  projectId: z.string().uuid(),
+  timestamp: z.string().datetime(),
+  project: ElectroCraftProjectDefinitionSchema,
+  documents: z.array(ElectroCraftDocumentSchema),
+  dataSources: z.array(DataSourceDefinitionSchema),
+  queries: z.array(QueryDefinitionSchema),
+  actions: z.array(ActionGraphSchema),
+  theme: ElectroCraftThemeSchema.optional(),
+  navigation: NavigationDefinitionSchema,
+  permissions: PermissionPolicySchema.optional(),
+  requiredCapabilities: z.array(z.string()).default([]),
+  mediaManifest: z.record(z.string()).default({}), // Asset ID -> Cloud URL mapping
+  schemaVersion: z.literal(1)
+});
+
+export type ElectroCraftExportIR = z.infer<typeof ElectroCraftExportIRSchema>;
+
+export const ExportTargetCompileContextSchema = z.object({
+  targetId: ExportTargetIdSchema,
+  environment: z.enum(['development', 'staging', 'production']).default('production'),
+  buildConfig: z.record(z.any()).default({}),
+  capabilitySupport: z.record(z.boolean()).default({}),
+  secretRefs: z.record(z.string()).default({}) // Reference names, not values
+});
+
+export type ExportTargetCompileContext = z.infer<typeof ExportTargetCompileContextSchema>;

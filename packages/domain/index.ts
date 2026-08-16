@@ -23,7 +23,9 @@ import {
   PermissionPolicy,
   ElectroCraftTheme,
   BlueprintPackage,
-  CapabilityRegistry
+  CapabilityRegistry,
+  ElectroCraftExportIR,
+  ExportTargetCompileContext
 } from '@electrocraft/contracts';
 
 export type {
@@ -45,7 +47,9 @@ export type {
   PermissionPolicy,
   ElectroCraftTheme,
   BlueprintPackage,
-  CapabilityRegistry
+  CapabilityRegistry,
+  ElectroCraftExportIR,
+  ExportTargetCompileContext
 };
 
 // Re-exporting with cleaner names if needed by domain logic
