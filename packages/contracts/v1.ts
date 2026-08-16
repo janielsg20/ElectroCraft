@@ -385,3 +385,23 @@ export const ExportTargetCompileContextSchema = z.object({
 });
 
 export type ExportTargetCompileContext = z.infer<typeof ExportTargetCompileContextSchema>;
+
+// --- M02.9: Engine Payload Wrappers ---
+
+export const SupportedEngineSchema = z.enum([
+  'puck',
+  'rete',
+  'tiptap',
+  'rqb',
+  'zod',
+  'electro-native'
+]);
+
+export const EnginePayloadWrapperSchema = z.object({
+  engine: SupportedEngineSchema,
+  version: z.number().default(1),
+  value: z.any(), // The actual engine-specific JSON payload
+  metadata: z.record(z.any()).optional()
+});
+
+export type EnginePayloadWrapper = z.infer<typeof EnginePayloadWrapperSchema>;

@@ -37,6 +37,11 @@ No se acepta:
 2. **Git como Backup**: Se mantiene el flujo de `commit` y `push` automático a GitHub para persistencia, pero el éxito de la fase no depende de las GitHub Actions.
 3. **Evidencia Local**: Los logs de test locales y resultados de build locales son la fuente de verdad actual.
 
+## Transparencia y Feedback en Tiempo Real
+1. **Notificación Proactiva**: Antes de ejecutar un comando largo (`vitest`, `build`, `git push`), la IA debe usar `notify_user` para informar qué está a punto de ocurrir.
+2. **Granularidad de Tareas**: La IA no debe agrupar demasiadas operaciones pesadas en un solo turno. Debe segmentar para que el usuario vea progreso constante en la barra de herramientas.
+3. **Divulgación de Logs**: Al terminar un comando, la IA debe resumir el resultado e indicar si hubo errores de forma clara e inmediata.
+
 ---
 
 # 1. Identidad
