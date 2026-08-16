@@ -1,0 +1,24 @@
+{
+  "appearance": {
+    "title": "Apariencia del Studio",
+    "description": "Personaliza tu entorno de trabajo. Estos cambios no afectan a tu App final.",
+    "color_scheme": "Esquema de Color",
+    "density": "Densidad de la Interfaz",
+    "accent_color": "Color de Acento",
+    "motion": "Efectos y Movimiento",
+    "compact": "Compacto",
+    "comfortable": "Cómodo",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "system": "Sistema"
+  },
+  "workspace": {
+    "title": "Espacio de Trabajo",
+    "language": "Idioma de la Interfaz"
+  },
+  "project": {
+    "title": "Proyecto",
+    "name": "Nombre del Proyecto",
+    "description": "Descripción"
+  }
+}
