@@ -6,11 +6,15 @@ ElectroCraft.
 Spec:
 Eighth Final Master Spec.
 
-Execution:
-F02 / M02.5 in progress. M02.4 completed.
+Implementation:
+IN_PROGRESS (F02)
 
-Policy:
-Cloud-First Absolute (No local tests).
+Active:
+F02 — Modelo canónico de App y ownership.
+M02.6 — Serializer y migrations de proyecto.
+
+Next exact action:
+Implement Project Serializer and MigrationRegistry in `packages/application`.
 
 Critical Eighth changes:
 - all nine export destinations are Core;

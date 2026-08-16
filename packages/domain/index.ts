@@ -95,3 +95,6 @@ export interface CapabilityService {
   getRegistry(platform: string): Promise<CapabilityRegistry>;
   checkSupport(platform: string, capabilityId: string): Promise<boolean>;
 }
+
+export * from '../application/project-serializer';
+export * from '../application/migration-registry';
