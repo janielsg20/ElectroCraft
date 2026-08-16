@@ -405,3 +405,19 @@ export const EnginePayloadWrapperSchema = z.object({
 });
 
 export type EnginePayloadWrapper = z.infer<typeof EnginePayloadWrapperSchema>;
+
+// --- M03.9: Studio Appearance (Internal Only) ---
+
+export const StudioAppearanceProfileSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string(),
+  mode: z.enum(['light', 'dark', 'system']).default('system'),
+  primaryColor: z.string().default('#007BFF'),
+  typographyScale: z.number().min(0.8).max(1.2).default(1.0),
+  density: z.enum(['compact', 'comfortable', 'spacious']).default('comfortable'),
+  radius: z.number().min(0).max(1).default(0.5), // Multiplier for base radius
+  motionIntensity: z.enum(['none', 'subtle', 'full']).default('subtle'),
+  showInternalIds: z.boolean().default(false)
+});
+
+export type StudioAppearanceProfile = z.infer<typeof StudioAppearanceProfileSchema>;

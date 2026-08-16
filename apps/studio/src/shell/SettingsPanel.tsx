@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Settings,
@@ -8,7 +8,8 @@ import {
   Github,
   Info,
   Palette,
-  Globe
+  Globe,
+  ChevronRight
 } from 'lucide-react';
 import {
   SheetContent,
@@ -20,8 +21,27 @@ import {
   Button
 } from '@electrocraft/design-system';
 
+import { StudioAppearanceSettings } from './StudioAppearanceSettings';
+
 export const SettingsPanel = () => {
   const { t } = useTranslation();
+  const [view, setView] = useState<'main' | 'appearance'>('main');
+
+  if (view === 'appearance') {
+    return (
+      <SheetContent side="right" className="w-[400px] sm:w-[540px] p-0 flex flex-col">
+        <StudioAppearanceSettings />
+        <Button
+          variant="ghost"
+          size="sm"
+          className="absolute left-4 top-4 h-8 px-2 gap-1 text-muted-foreground z-10"
+          onClick={() => setView('main')}
+        >
+          <ChevronRight className="w-4 h-4 rotate-180" /> Volver
+        </Button>
+      </SheetContent>
+    );
+  }
 
   return (
     <SheetContent side="right" className="w-[400px] sm:w-[540px] p-0 flex flex-col">
@@ -53,14 +73,15 @@ export const SettingsPanel = () => {
                   </Button>
                </div>
 
-               <div className="flex items-center justify-between p-3 rounded-lg border bg-muted/10">
+               <div
+                  className="flex items-center justify-between p-3 rounded-lg border bg-muted/10 cursor-pointer hover:bg-muted/20 transition-colors group"
+                  onClick={() => setView('appearance')}
+                >
                   <div className="flex flex-col gap-0.5">
-                    <span className="text-sm font-bold">Tema Visual</span>
-                    <span className="text-[11px] text-muted-foreground">Sistema, Claro u Oscuro.</span>
+                    <span className="text-sm font-bold">Apariencia del Studio</span>
+                    <span className="text-[11px] text-muted-foreground">Colores, temas y densidad del editor.</span>
                   </div>
-                  <Button variant="outline" size="sm" className="gap-2">
-                    <Palette className="w-3.5 h-3.5" /> Sistema
-                  </Button>
+                  <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-all" />
                </div>
             </div>
           </section>

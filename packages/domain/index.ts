@@ -26,7 +26,8 @@ import {
   CapabilityRegistry,
   ElectroCraftExportIR,
   ExportTargetCompileContext,
-  EnginePayloadWrapper
+  EnginePayloadWrapper,
+  StudioAppearanceProfile
 } from '@electrocraft/contracts';
 
 export type {
@@ -51,7 +52,8 @@ export type {
   CapabilityRegistry,
   ElectroCraftExportIR,
   ExportTargetCompileContext,
-  EnginePayloadWrapper
+  EnginePayloadWrapper,
+  StudioAppearanceProfile
 };
 
 // Re-exporting with cleaner names if needed by domain logic
