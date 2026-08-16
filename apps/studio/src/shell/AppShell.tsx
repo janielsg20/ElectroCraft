@@ -61,6 +61,7 @@ import {
 import { SettingsPanel } from './SettingsPanel';
 import { PropertyInspector } from './PropertyInspector';
 import { ComponentPalette } from './ComponentPalette';
+import { HelpTrigger } from '../help/HelpTrigger';
 
 interface SidebarItemProps {
   icon: any;
@@ -289,11 +290,12 @@ export const AppShell = () => {
                 <Separator orientation="vertical" className="h-6 hidden sm:block" />
 
                 <div className="flex items-center gap-1">
+                   <HelpTrigger helpId={activeSection} />
                    <Button variant="outline" size="sm" className="gap-2 h-9 px-2 sm:px-3">
                     <Share2 className="w-4 h-4" />
                     <span className="hidden sm:inline">{t('shell.items.export')}</span>
                   </Button>
-                  <Button size="sm" className="gap-2 bg-primary h-9 px-3 sm:px-4 font-bold">
+                  <Button size="sm" className="gap-2 bg-primary h-9 px-3 sm:px-4 font-bold shadow-md shadow-primary/20">
                     <CheckCircle2 className="w-4 h-4" />
                     <span className="hidden sm:inline">{t('shell.items.deploy')}</span>
                   </Button>
@@ -342,9 +344,12 @@ export const AppShell = () => {
                 ) : (
                   <>
                     <div className="h-10 px-4 flex items-center justify-between border-b bg-background/50">
-                      <h3 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/70">
-                        {activeSection === 'screens' ? 'Páginas' : t(`shell.items.${activeSection}`)}
-                      </h3>
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/70">
+                          {activeSection === 'screens' ? 'Páginas' : t(`shell.items.${activeSection}`)}
+                        </h3>
+                        <HelpTrigger helpId={activeSection} />
+                      </div>
                       <Button variant="ghost" size="icon" className="w-6 h-6">
                         <Plus className="w-4 h-4" />
                       </Button>
@@ -360,16 +365,20 @@ export const AppShell = () => {
                               idx === 0 && activeSection === 'screens' ? "bg-primary/5 text-primary font-bold border-l-4 border-primary rounded-l-none" : ""
                             )}
                           >
-                            <Layers className="w-4 h-4 mr-2.5 text-muted-foreground" />
+                            <Layers className="w-4 h-4 mr-2.5 text-muted-foreground group-hover:text-primary transition-colors" />
                             {item}
                           </Button>
                         ))}
                       </div>
                     </ScrollArea>
                     <div className="p-4 border-t bg-primary/5">
-                       <div className="flex items-center gap-3 p-3 rounded-xl bg-background border border-primary/20 shadow-sm">
-                          <Bot className="w-5 h-5 text-primary" />
-                          <span className="text-[10px] font-bold text-primary uppercase">Gemini Activo</span>
+                       <div className="flex items-center gap-3 p-3 rounded-xl bg-background border border-primary/20 shadow-sm relative overflow-hidden group cursor-help">
+                          <div className="absolute inset-0 bg-primary/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+                          <Bot className="w-5 h-5 text-primary relative z-10" />
+                          <div className="flex flex-col relative z-10">
+                            <span className="text-[10px] font-bold text-primary uppercase tracking-tight">IA Sugiere</span>
+                            <span className="text-[11px] font-medium text-muted-foreground italic leading-tight">Crea una pantalla de login</span>
+                          </div>
                        </div>
                     </div>
                   </>
@@ -384,9 +393,9 @@ export const AppShell = () => {
                  <div className="h-12 border-b bg-background/50 backdrop-blur-md flex items-center justify-center shrink-0 z-10">
                     <Tabs defaultValue="design">
                       <TabsList className="h-8.5 bg-muted/80 p-1 rounded-lg">
-                        <TabsTrigger value="design" className="text-xs px-4 sm:px-5 font-bold">Diseño</TabsTrigger>
-                        <TabsTrigger value="logic" className="text-xs px-4 sm:px-5 font-bold">Lógica</TabsTrigger>
-                        <TabsTrigger value="code" className="text-xs px-4 sm:px-5 font-bold">Código</TabsTrigger>
+                        <TabsTrigger value="design" className="text-xs px-4 sm:px-5 font-bold tracking-tight">Diseño</TabsTrigger>
+                        <TabsTrigger value="logic" className="text-xs px-4 sm:px-5 font-bold tracking-tight">Lógica</TabsTrigger>
+                        <TabsTrigger value="code" className="text-xs px-4 sm:px-5 font-bold tracking-tight">Código</TabsTrigger>
                       </TabsList>
                     </Tabs>
                  </div>
@@ -437,7 +446,7 @@ export const AppShell = () => {
                                   <div className="w-8 h-8 rounded-lg bg-orange-500/10 text-orange-600 flex items-center justify-center mb-2">
                                     <Table className="w-4 h-4" />
                                   </div>
-                                  <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">Facturas</span>
+                                  <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest leading-none">Facturas</span>
                                   <div className="text-xl font-black mt-1">14</div>
                                 </div>
                                 <div
@@ -450,7 +459,7 @@ export const AppShell = () => {
                                   <div className="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-600 flex items-center justify-center mb-2">
                                     <Zap className="w-4 h-4" />
                                   </div>
-                                  <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">Actividad</span>
+                                  <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest leading-none">Actividad</span>
                                   <div className="text-xl font-black mt-1">89%</div>
                                 </div>
                               </div>
@@ -513,44 +522,51 @@ export const AppShell = () => {
 
             {/* 7. Statusbar */}
             <footer className="h-8 border-t bg-background flex items-center justify-between px-4 shrink-0 select-none hidden sm:flex">
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 text-foreground/70">
                 <div className="flex items-center gap-2 text-green-600 font-bold text-[10px] uppercase tracking-widest">
-                  <div className="w-2 h-2 rounded-full bg-green-500" /> Sincronizado
+                  <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]" /> Sincronizado
                 </div>
               </div>
-              <div className="flex items-center gap-4 text-[9px] font-black text-muted-foreground/50 uppercase tracking-tighter">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>EC-STUDIO-v0.8.2</span>
+              <div className="flex items-center gap-6 text-[9px] font-black text-muted-foreground/40 uppercase tracking-tighter">
+                <div className="flex items-center gap-2">
+                  <Globe className="w-3 h-3" /> ESPAÑOL
+                </div>
+                <Separator orientation="vertical" className="h-3" />
+                <div className="flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5" /> SECURE_MODE_ON
+                </div>
+                <Separator orientation="vertical" className="h-3" />
+                <span>v0.8.2-FINAL</span>
               </div>
             </footer>
 
             {/* 8. Mobile Bottom Navigation */}
-            <nav className="h-16 border-t bg-background flex items-center justify-around shrink-0 md:hidden z-20">
+            <nav className="h-16 border-t bg-background flex items-center justify-around shrink-0 md:hidden z-20 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
                <button
-                className={cn("flex flex-col items-center gap-1 transition-colors", mobileView === 'structure' ? "text-primary" : "text-muted-foreground")}
+                className={cn("flex flex-col items-center gap-1 transition-all duration-300", mobileView === 'structure' ? "text-primary scale-110" : "text-muted-foreground opacity-60")}
                 onClick={() => setMobileView('structure')}
                >
                  <Layers className="w-5 h-5" />
-                 <span className="text-[9px] font-bold uppercase">Estructura</span>
+                 <span className="text-[9px] font-black uppercase tracking-tighter">Estructura</span>
                </button>
                <button
-                className={cn("flex flex-col items-center gap-1 transition-colors", mobileView === 'canvas' ? "text-primary" : "text-muted-foreground")}
+                className={cn("flex flex-col items-center gap-1 transition-all duration-300", mobileView === 'canvas' ? "text-primary scale-110" : "text-muted-foreground opacity-60")}
                 onClick={() => setMobileView('canvas')}
                >
                  <Layout className="w-5 h-5" />
-                 <span className="text-[9px] font-bold uppercase">Canvas</span>
+                 <span className="text-[9px] font-black uppercase tracking-tighter">Canvas</span>
                </button>
                <button
-                className={cn("flex flex-col items-center gap-1 transition-colors", mobileView === 'inspector' ? "text-primary" : "text-muted-foreground")}
+                className={cn("flex flex-col items-center gap-1 transition-all duration-300", mobileView === 'inspector' ? "text-primary scale-110" : "text-muted-foreground opacity-60")}
                 onClick={() => setMobileView('inspector')}
                >
                  <Settings2 className="w-5 h-5" />
-                 <span className="text-[9px] font-bold uppercase">Inspector</span>
+                 <span className="text-[9px] font-black uppercase tracking-tighter">Inspector</span>
                </button>
                <SheetTrigger asChild>
-                 <button className="flex flex-col items-center gap-1 text-muted-foreground">
+                 <button className="flex flex-col items-center gap-1 text-muted-foreground opacity-60">
                    <Settings className="w-5 h-5" />
-                   <span className="text-[9px] font-bold uppercase">Ajustes</span>
+                   <span className="text-[9px] font-black uppercase tracking-tighter">Ajustes</span>
                  </button>
                </SheetTrigger>
             </nav>

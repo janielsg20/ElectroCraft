@@ -1,0 +1,24 @@
+{
+  "search": "Buscar en la ayuda",
+  "what_can_i_do": "¿Qué puedo hacer aquí?",
+  "related_concepts": "Conceptos relacionados",
+  "example": "Ejemplo",
+  "more_info": "Más información",
+  "sections": {
+    "screens": {
+      "title": "Pantallas",
+      "short": "Gestiona las páginas de tu aplicación.",
+      "long": "Las pantallas son los contenedores principales de tu interfaz. Aquí puedes crear nuevas páginas, configurar sus rutas y definir la estructura visual base."
+    },
+    "data_sources": {
+      "title": "Fuentes de Datos",
+      "short": "Conecta tu app con el mundo exterior.",
+      "long": "Configura conexiones a bases de datos PostgreSQL, MySQL o APIs REST. ElectroCraft mantiene tus credenciales seguras fuera del código fuente."
+    },
+    "ai_generate": {
+      "title": "Generar con IA",
+      "short": "Asistente inteligente para diseño y lógica.",
+      "long": "Usa la potencia de Gemini para generar componentes, esquemas de datos o flujos de trabajo completos a partir de instrucciones en lenguaje natural."
+    }
+  }
+}

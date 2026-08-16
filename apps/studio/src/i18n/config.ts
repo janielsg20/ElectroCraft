@@ -5,13 +5,15 @@ import { initReactI18next } from 'react-i18next';
 import common from './locales/es/common.json';
 import shell from './locales/es/shell.json';
 import settings from './locales/es/settings.json';
+import help from './locales/es/help.json';
 
 export const defaultNS = 'common';
 export const resources = {
   es: {
     common,
     shell,
-    settings
+    settings,
+    help
   },
 } as const;
 

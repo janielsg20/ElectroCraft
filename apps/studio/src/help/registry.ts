@@ -1,8 +1,10 @@
 export interface HelpDescriptor {
   id: string;
-  title: string;
-  description: string;
-  link?: string;
+  titleKey: string;
+  shortKey: string;
+  longKey?: string;
+  relatedIds?: string[];
+  learnMoreRef?: string;
 }
 
 class HelpRegistry {
@@ -23,21 +25,24 @@ class HelpRegistry {
 
 export const helpRegistry = new HelpRegistry();
 
-// M03.1 - M03.3 Initial registration
+// F03 Initial registrations
 helpRegistry.register({
-  id: 'help.studio.shell',
-  title: 'Interfaz del Studio',
-  description: 'Guía rápida sobre las áreas principales del editor de ElectroCraft: Sidebar global, Canvas central e Inspector de propiedades.'
+  id: 'screens',
+  titleKey: 'help:sections.screens.title',
+  shortKey: 'help:sections.screens.short',
+  longKey: 'help:sections.screens.long'
 });
 
 helpRegistry.register({
-  id: 'help.studio.sidebar',
-  title: 'Barra de Navegación',
-  description: 'Accede a las herramientas de construcción, datos, lógica y publicación desde el panel izquierdo.'
+  id: 'data_sources',
+  titleKey: 'help:sections.data_sources.title',
+  shortKey: 'help:sections.data_sources.short',
+  longKey: 'help:sections.data_sources.long'
 });
 
 helpRegistry.register({
-  id: 'help.studio.canvas',
-  title: 'Editor Visual',
-  description: 'Arrastra componentes y diseña tu aplicación en tiempo real con previsualización multi-dispositivo.'
+  id: 'ai_generate',
+  titleKey: 'help:sections.ai_generate.title',
+  shortKey: 'help:sections.ai_generate.short',
+  longKey: 'help:sections.ai_generate.long'
 });
