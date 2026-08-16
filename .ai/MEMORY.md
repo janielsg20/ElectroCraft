@@ -4,10 +4,15 @@ Product:
 ElectroCraft — No-Code App Builder.
 
 Execution:
-F00 / M00.1 initially.
+F02 / M02.5 in progress. M02.4 completed.
+
+Verificación:
+GitHub Actions (Cloud-First Absolute).
 
 Core mental model:
 Screens, Navigation, Components, Data Sources, Queries, State, Actions, Forms, Auth, Administration, Resources.
+Project, Document, Component, Layout, and Style models defined in @electrocraft/contracts and @electrocraft/domain.
+Styles support responsive (mobile, tablet, desktop) and platform (web, native, lamp, wordpress) overrides.
 
 Studio:
 - shadcn/ui Radix.

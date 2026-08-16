@@ -6,15 +6,11 @@ ElectroCraft.
 Spec:
 Eighth Final Master Spec.
 
-Implementation:
-NOT STARTED.
+Execution:
+F02 / M02.5 in progress. M02.4 completed.
 
-Active:
-F00 — Auditoría de producto, OSS y POCs.
-M00.1 — Trazar alcance heredado al modelo ElectroCraft No-Code.
-
-Next exact action:
-Create the atomic requirements/ownership matrix against the Eighth Final architecture.
+Policy:
+Cloud-First Absolute (No local tests).
 
 Critical Eighth changes:
 - all nine export destinations are Core;

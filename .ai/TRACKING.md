@@ -3,23 +3,25 @@
 ## Microfases Finalizadas
 
 ### F00 — Auditoría de producto, OSS y POCs
-- **M00.1**: Trazar alcance heredado al modelo No-Code. (DONE)
-- **M00.2**: Auditar responsabilidades OSS. (DONE)
-- **M00.3**: POC Visual Editor con Puck. (DONE)
-- **M00.4**: POC Studio DB genérica (PGlite). (DONE)
-- **M00.5**: POC Query portable. (DONE)
-- **M00.6**: POC Action Flow Rete. (DONE)
-- **M00.7**: POC Native runtime (Expo). (DONE)
-- **M00.8**: POC AI SDK + Gemini. (DONE)
-- **M00.9**: POC Data Sources (REST/GraphQL). (DONE)
-- **M00.10**: POC Paridad Exportación (LAMP/WP). (DONE)
-- **M00.11**: Cerrar ADR de arquitectura. (DONE)
+- **M00.1** a **M00.11**: Auditoría y POCs completados. (DONE)
+
+### F01 — Infraestructura de aplicación
+- **M01.1**: Definir Workspace del Studio. (DONE)
+- **M01.2**: Configurar TypeScript y boundaries. (DONE)
+- **M01.3**: Configurar lint, test y build. (DONE)
+- **M01.4**: Crear Studio Vite/PWA bootstrap. (DONE)
+- **M01.5**: Crear CI base. (DONE)
+- **M01.6**: Documentar conventions. (DONE)
+
+### F02 — Modelo canónico de App y ownership
+- **M02.1**: Definir ElectroCraftProjectDefinition y ElectroCraftDocument. (DONE)
+- **M02.2**: Definir Component/Layout/Style. (DONE)
 
 ---
 
 ## Microfases en Curso
 
-### M01.1 — Definir Workspace del Studio
-- **Fase**: F01 — Infraestructura de aplicación
+### M02.3 — Definir ElectroCraftNavigation y Routes
+- **Fase**: F02 — Modelo canónico de App y ownership
 - **Estado**: EN_CURSO
-- **Objetivo**: Configurar el workspace base del Studio siguiendo los ADRs aprobados.
+- **Objetivo**: Establecer la semántica portable de navegación y rutas.

@@ -1,0 +1,9 @@
+{
+  "name": "@electrocraft/contracts",
+  "version": "0.1.0",
+  "description": "Schemas de validación y contratos de datos para ElectroCraft",
+  "main": "index.ts",
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
+}
