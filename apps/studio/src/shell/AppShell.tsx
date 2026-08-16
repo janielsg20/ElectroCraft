@@ -50,7 +50,6 @@ import {
   TabsTrigger,
   Sheet,
   SheetTrigger,
-  SheetContent,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -61,6 +60,7 @@ import {
 } from '@electrocraft/design-system';
 import { SettingsPanel } from './SettingsPanel';
 import { PropertyInspector } from './PropertyInspector';
+import { ComponentPalette } from './ComponentPalette';
 
 interface SidebarItemProps {
   icon: any;
@@ -133,7 +133,7 @@ export const AppShell = () => {
       <Sheet>
         <div className="flex h-[100dvh] w-screen overflow-hidden bg-background text-foreground font-sans">
 
-          {/* 1. Global Sidebar - Hidden on mobile */}
+          {/* 1. Global Sidebar */}
           <aside
             className={cn(
               "border-r flex flex-col bg-muted/20 transition-all duration-300 ease-in-out select-none shrink-0 hidden md:flex",
@@ -218,10 +218,9 @@ export const AppShell = () => {
 
           <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
 
-            {/* 2. Topbar - Compact on mobile */}
+            {/* 2. Topbar */}
             <header className="h-14 border-b flex items-center justify-between px-2 sm:px-4 bg-background shrink-0 select-none">
               <div className="flex items-center gap-2 sm:gap-4">
-                {/* Mobile Menu Trigger */}
                 <div className="md:hidden">
                   <Button variant="ghost" size="icon" className="h-9 w-9">
                     <Menu className="w-5 h-5" />
@@ -250,7 +249,6 @@ export const AppShell = () => {
 
                 <Separator orientation="vertical" className="h-6 hidden sm:block" />
 
-                {/* Platform Selector - Compact on tablet, icons only on small screens */}
                 <div className="flex items-center bg-muted/50 rounded-lg p-1">
                   <Button
                     variant={activePlatform === 'web' ? 'default' : 'ghost'}
@@ -332,44 +330,50 @@ export const AppShell = () => {
 
             <div className="flex-1 flex overflow-hidden relative">
 
-              {/* 3. Sub-navigation Panel - Hidden on mobile/small-tablet */}
+              {/* 3. Sub-navigation Panel */}
               <aside
                 className={cn(
-                  "w-64 border-r flex flex-col bg-muted/5 shrink-0 transition-transform duration-300",
+                  "w-72 border-r flex flex-col bg-muted/5 shrink-0 transition-all duration-300",
                   "hidden lg:flex"
                 )}
               >
-                <div className="h-10 px-4 flex items-center justify-between border-b bg-background/50">
-                  <h3 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/70">
-                    {activeSection === 'screens' ? 'Páginas' : t(`shell.items.${activeSection}`)}
-                  </h3>
-                  <Button variant="ghost" size="icon" className="w-6 h-6">
-                    <Plus className="w-4 h-4" />
-                  </Button>
-                </div>
-                <ScrollArea className="flex-1">
-                  <div className="p-2 space-y-1">
-                    {['Inicio', 'Listado de Clientes', 'Nueva Factura', 'Configuración'].map((item, idx) => (
-                      <Button
-                        key={item}
-                        variant="ghost"
-                        className={cn(
-                          "w-full justify-start font-normal h-9 text-sm px-3",
-                          idx === 0 && activeSection === 'screens' ? "bg-primary/5 text-primary font-bold border-l-4 border-primary rounded-l-none" : ""
-                        )}
-                      >
-                        <Layers className="w-4 h-4 mr-2.5 text-muted-foreground" />
-                        {item}
+                {activeSection === 'components' ? (
+                  <ComponentPalette />
+                ) : (
+                  <>
+                    <div className="h-10 px-4 flex items-center justify-between border-b bg-background/50">
+                      <h3 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/70">
+                        {activeSection === 'screens' ? 'Páginas' : t(`shell.items.${activeSection}`)}
+                      </h3>
+                      <Button variant="ghost" size="icon" className="w-6 h-6">
+                        <Plus className="w-4 h-4" />
                       </Button>
-                    ))}
-                  </div>
-                </ScrollArea>
-                <div className="p-4 border-t bg-primary/5">
-                   <div className="flex items-center gap-3 p-3 rounded-xl bg-background border border-primary/20 shadow-sm">
-                      <Bot className="w-5 h-5 text-primary" />
-                      <span className="text-[10px] font-bold text-primary uppercase">Gemini Activo</span>
-                   </div>
-                </div>
+                    </div>
+                    <ScrollArea className="flex-1">
+                      <div className="p-2 space-y-1">
+                        {['Inicio', 'Listado de Clientes', 'Nueva Factura', 'Configuración'].map((item, idx) => (
+                          <Button
+                            key={item}
+                            variant="ghost"
+                            className={cn(
+                              "w-full rounded-md justify-start font-normal h-9 text-sm px-3 group transition-all",
+                              idx === 0 && activeSection === 'screens' ? "bg-primary/5 text-primary font-bold border-l-4 border-primary rounded-l-none" : ""
+                            )}
+                          >
+                            <Layers className="w-4 h-4 mr-2.5 text-muted-foreground" />
+                            {item}
+                          </Button>
+                        ))}
+                      </div>
+                    </ScrollArea>
+                    <div className="p-4 border-t bg-primary/5">
+                       <div className="flex items-center gap-3 p-3 rounded-xl bg-background border border-primary/20 shadow-sm">
+                          <Bot className="w-5 h-5 text-primary" />
+                          <span className="text-[10px] font-bold text-primary uppercase">Gemini Activo</span>
+                       </div>
+                    </div>
+                  </>
+                )}
               </aside>
 
               {/* 4. Canvas Central */}
@@ -389,7 +393,6 @@ export const AppShell = () => {
 
                  <ScrollArea className="flex-1" onClick={() => setSelectedElementId(null)}>
                    <div className="p-4 sm:p-8 lg:p-12 flex items-center justify-center min-h-full">
-                      {/* Device Preview Frame */}
                       <div
                         className={cn(
                           "bg-slate-950 shadow-[0_0_100px_-20px_rgba(0,0,0,0.4)] border-slate-900 overflow-hidden relative flex flex-col transition-all duration-500 ring-1 ring-white/10",
@@ -412,29 +415,53 @@ export const AppShell = () => {
                             </header>
 
                             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6 overflow-auto">
-                              <div className="h-32 sm:h-36 w-full bg-gradient-to-br from-primary to-blue-600 rounded-2xl sm:rounded-3xl p-4 sm:p-5 text-white flex flex-col shadow-xl cursor-pointer" onClick={() => setSelectedElementId('hero_card')}>
+                              <div
+                                className={cn(
+                                  "h-32 sm:h-36 w-full bg-gradient-to-br from-primary to-blue-600 rounded-2xl sm:rounded-3xl p-4 sm:p-5 text-white flex flex-col shadow-xl cursor-pointer transition-all",
+                                  selectedElementId === 'hero_card' && "ring-4 ring-primary ring-offset-2"
+                                )}
+                                onClick={() => setSelectedElementId('hero_card')}
+                              >
                                 <span className="text-[9px] font-black uppercase tracking-widest opacity-80">Ventas</span>
                                 <span className="text-3xl sm:text-4xl font-black mt-2 leading-none">$12,450</span>
                               </div>
 
                               <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                                <div className="h-28 sm:h-32 bg-card rounded-2xl sm:rounded-3xl border p-3 sm:p-4 shadow-sm" onClick={() => setSelectedElementId('stats_1')}>
+                                <div
+                                  className={cn(
+                                    "h-28 sm:h-32 bg-card rounded-2xl sm:rounded-3xl border p-3 sm:p-4 shadow-sm cursor-pointer transition-all",
+                                    selectedElementId === 'stats_1' && "ring-4 ring-primary"
+                                  )}
+                                  onClick={() => setSelectedElementId('stats_1')}
+                                >
                                   <div className="w-8 h-8 rounded-lg bg-orange-500/10 text-orange-600 flex items-center justify-center mb-2">
                                     <Table className="w-4 h-4" />
                                   </div>
-                                  <span className="text-[9px] font-black text-muted-foreground uppercase">Facturas</span>
+                                  <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">Facturas</span>
                                   <div className="text-xl font-black mt-1">14</div>
                                 </div>
-                                <div className="h-28 sm:h-32 bg-card rounded-2xl sm:rounded-3xl border p-3 sm:p-4 shadow-sm" onClick={() => setSelectedElementId('stats_2')}>
+                                <div
+                                  className={cn(
+                                    "h-28 sm:h-32 bg-card rounded-2xl sm:rounded-3xl border p-3 sm:p-4 shadow-sm cursor-pointer transition-all",
+                                    selectedElementId === 'stats_2' && "ring-4 ring-primary"
+                                  )}
+                                  onClick={() => setSelectedElementId('stats_2')}
+                                >
                                   <div className="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-600 flex items-center justify-center mb-2">
                                     <Zap className="w-4 h-4" />
                                   </div>
-                                  <span className="text-[9px] font-black text-muted-foreground uppercase">Actividad</span>
+                                  <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">Actividad</span>
                                   <div className="text-xl font-black mt-1">89%</div>
                                 </div>
                               </div>
 
-                              <Button className="w-full h-12 sm:h-14 rounded-xl sm:rounded-2xl text-sm sm:text-base font-black shadow-xl" onClick={() => setSelectedElementId('main_btn')}>
+                              <Button
+                                className={cn(
+                                  "w-full h-12 sm:h-14 rounded-xl sm:rounded-2xl text-sm sm:text-base font-black shadow-xl transition-all",
+                                  selectedElementId === 'main_btn' && "ring-4 ring-primary ring-offset-2"
+                                )}
+                                onClick={() => setSelectedElementId('main_btn')}
+                              >
                                 Nueva Orden
                               </Button>
                             </div>
@@ -448,7 +475,7 @@ export const AppShell = () => {
                  </ScrollArea>
               </main>
 
-              {/* 5. Mobile Views (Overlay screens for structure/inspector) */}
+              {/* 5. Mobile Views */}
               {mobileView === 'structure' && (
                 <div className="flex-1 bg-background md:hidden flex flex-col animate-in slide-in-from-left duration-200">
                   <div className="h-14 border-b flex items-center px-4 justify-between">
@@ -477,14 +504,14 @@ export const AppShell = () => {
                 </div>
               )}
 
-              {/* 6. Property Inspector - Desktop Hidden on smaller xl screens */}
+              {/* 6. Property Inspector - Desktop */}
               <aside className="w-80 border-l flex flex-col bg-background shrink-0 hidden xl:flex">
                 <PropertyInspector selectedElement={selectedElementId} />
               </aside>
 
             </div>
 
-            {/* 7. Statusbar - Hidden on small mobile */}
+            {/* 7. Statusbar */}
             <footer className="h-8 border-t bg-background flex items-center justify-between px-4 shrink-0 select-none hidden sm:flex">
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2 text-green-600 font-bold text-[10px] uppercase tracking-widest">
